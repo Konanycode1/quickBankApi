@@ -10,7 +10,7 @@ app.use(cors());
 const controller = require('../controller/user');
 
 
-mongoose.connect("mongodb+srv://konany:konanycode@cluster0.yf1czwi.mongodb.net/?retryWrites=true&w=majority",
+mongoose.connect("mongodb+srv://bankquick:bankquick@cluster0.64ckrp6.mongodb.net/?retryWrites=true&w=majority",
 { useNewUrlParser: true,useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
