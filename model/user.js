@@ -7,10 +7,11 @@ const mongooseShema = mongoose.Schema({
     adresse:{type:String,required: true},
     contact:{type:String,required: true},
     email:{type:String,required: true, unique:true},
-    sexe:{type:String,required: true},
+    genre:{type:String,required: true},
     statutCompte: {type: String,required: true},
     statutExist: {type:String, required:true},
-    carteVisa: {type: String, required: true}
+    carteVisa: {type: String, required: true},
+    password: {type:String, required: true}
 });
 mongooseShema.plugin(uniqueValidate);
 module.exports = mongoose.model("User", mongooseShema)
