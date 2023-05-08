@@ -6,6 +6,9 @@ const router = express.Router();
 router.get('/',(req, res)=> {
     res.send("hello my serverless avaibale!!")
 })
+router.post('/add/', (req,res)=>{
+    res.send("post valide !!")
+})
 
 app.use('/.netlify/functions/server', router )
 
