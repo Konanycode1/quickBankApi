@@ -24,6 +24,7 @@ app.use((req, res, next) => {
 
 
 router.post('/',controller.UserAccount);
+router.get('/login/', controller.Userlog);
 app.use('/.netlify/functions/server', router )
 
 module.exports.handler = serverless(app)
