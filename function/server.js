@@ -5,7 +5,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-// app.use(cors());
+app.use(cors());
 const controller = require('../controller/user');
 
 
