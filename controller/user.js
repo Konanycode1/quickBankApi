@@ -1,5 +1,5 @@
 const User = require('../model/user');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.UserAccount = (req,res, next)=>{
     User.findOne({email: req.body.email})
@@ -31,12 +31,7 @@ exports.UserAccount = (req,res, next)=>{
 
         
     })
-    .catch((error)=> res.status(400).json({error: error.message}))
-
-
-    res.status(200).json({
-        msg:"message valide !!!"
-    })
+    .catch((error)=> res.status(400).json({error: error.message}));
 }
 exports.Userlog = (req, res, next)=>{
     res.status(200).json({
