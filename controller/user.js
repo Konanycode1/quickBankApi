@@ -2,7 +2,7 @@ const User = require('../model/user');
 const bcrypt = require('bcrypt');
 
 exports.UserAccount = (req,res, next)=>{
-    User.findOne({email: req.params.email})
+    User.findOne({email: req.body.email})
     .then( user => {
         if(user){
             res.status(404).json({
