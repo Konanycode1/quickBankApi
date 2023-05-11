@@ -2,8 +2,9 @@
   "name": "quickbankapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "function/server.js",
   "scripts": {
+    "dev": "nodemon function/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "netlify deploy --prod"
   },
@@ -15,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
     "mongoose-unique-validator": "^4.0.0",
     "netlify": "^13.1.5",

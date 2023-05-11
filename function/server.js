@@ -8,6 +8,11 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
 const controller = require('../controller/user');
+const  vire = require('../controller/virement');
+const credi = require('../controller/credite')
+const auth = require("../middleware/auth");
+const debit = require('../controller/debite')
+
 
 
 mongoose.connect("mongodb+srv://bankquick:bankquick@cluster0.64ckrp6.mongodb.net/?retryWrites=true&w=majority",
@@ -24,7 +29,19 @@ app.use((req, res, next) => {
 
 
 router.post('/',controller.UserAccount);
-router.get('/login/', controller.Userlog);
-app.use('/.netlify/functions/server', router )
+router.post('/login/', controller.Userlog);
+router.get('/allUser/', controller.recupUserAll);
+router.put("/updatePass/", controller.updateUser);
+router.post('/virement/',auth,vire.virement);
+router.get('/virementAll/',auth,vire.virementAll);
+router.get('/virementOne/:id',auth,vire.virementOne);
+router.post('/credite/',auth,credi.CrediteCompte);
+router.get('/crediteAll/',auth,credi.CrediteAll);
+router.get('/crediteOne/:id',auth,credi.CrediteOne);
+router.post('/debite/',auth,debit.DebiteCompte);
+router.get('/debiteAll/',auth,debit.debiteAll);
+router.get('/debiteOne/:id',auth,debit.debiteOne);
+app.use('/api', router)
 
-module.exports.handler = serverless(app)
+app.listen(3000)
+// module.exports.handler = serverless(app)
