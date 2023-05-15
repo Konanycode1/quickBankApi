@@ -11,7 +11,8 @@ const controller = require('../controller/user');
 const  vire = require('../controller/virement');
 const credi = require('../controller/credite')
 const auth = require("../middleware/auth");
-const debit = require('../controller/debite')
+const debit = require('../controller/debite');
+const gestion = require('../controller/espaceEntre');
 
 
 
@@ -41,7 +42,10 @@ router.get('/crediteOne/:id',auth,credi.CrediteOne);
 router.post('/debite/',auth,debit.DebiteCompte);
 router.get('/debiteAll/',auth,debit.debiteAll);
 router.get('/debiteOne/:id',auth,debit.debiteOne);
+router.post('/gestionDebite/', gestion.DebiteClient)
+router.get('/gestionCredite/', gestion.CrediteClient);
+
 app.use('/api', router)
 
-app.listen(3000)
+app.listen(3000) 
 // module.exports.handler = serverless(app)
