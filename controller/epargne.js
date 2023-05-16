@@ -47,7 +47,7 @@ exports.epargneSous = (req,res, next)=>{
                                             solde: sold.solde - parseInt(req.body.montant)
                                         }
                                         Solde.updateOne({userId: data._id},{...sold, userId: data._id})
-                                        .then(()=>res.status(201).json({msg: "vous avez epargnez"}))
+                                        .then(()=>res.status(201).json({msg: "Vous avez épargnez merci pour la confiance"}))
                                         .catch((error)=> res.status.json({error: error.message}))
 
                                     })
@@ -57,12 +57,14 @@ exports.epargneSous = (req,res, next)=>{
                                    
                                   Epargne.findOne({userId: data._id})
                                   .then((epg)=> {
-                                    const epagnCount = {
-                                        solde : epg.solde + parseInt(req.body.montant)
-                                    }
-                                    Epargne.updateOne({userId:epg.userId }, {...epagnCount,userId:epg.userId })
-                                    .then(()=> res.status(201).json({msg: "Vous avez épargnez merci pour la confiance"}))
-                                  })
+                                        const epagnCount = {
+                                            solde : epg.solde + parseInt(req.body.montant)
+                                        }
+                                        Epargne.updateOne({userId:epg.userId }, {...epagnCount,userId:epg.userId })
+                                        .then(()=> res.status(201).json({msg: "Vous avez épargnez merci pour la confiance"}))
+                                        .catch((error)=> res.status.json({error: error.message}))
+                                    })
+                                    .catch((error)=> res.status.json({error: error.message}))
 
                                 }
                             })
