@@ -75,6 +75,7 @@ exports.UserAccount = (req,res, next)=>{
     .catch((error)=> res.status(400).json({error: error.message}));
 }
 exports.Userlog = (req, res, next)=>{
+    console.log(req.body.email)
     User.findOne({email: req.body.email})
     .then((user)=>{
         if (!user) {

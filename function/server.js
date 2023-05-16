@@ -45,7 +45,7 @@ router.get('/debiteAll/',auth,debit.debiteAll);
 router.get('/debiteOne/:id',auth,debit.debiteOne);
 router.post('/gestionDebite/', gestion.DebiteClient)
 router.get('/gestionCredite/', gestion.CrediteClient);
-router.post('/epargneSous/', epargne.epargneSous);
+router.post('/epargneSous/',auth, epargne.epargneSous);
  
 app.use('/api', router)
 
