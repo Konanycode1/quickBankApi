@@ -13,6 +13,7 @@ const credi = require('../controller/credite')
 const auth = require("../middleware/auth");
 const debit = require('../controller/debite');
 const gestion = require('../controller/espaceEntre');
+const epargne = require('../controller/epargne')
 
 
 
@@ -44,7 +45,8 @@ router.get('/debiteAll/',auth,debit.debiteAll);
 router.get('/debiteOne/:id',auth,debit.debiteOne);
 router.post('/gestionDebite/', gestion.DebiteClient)
 router.get('/gestionCredite/', gestion.CrediteClient);
-
+router.post('/epargneSous/', epargne.epargneSous);
+ 
 app.use('/api', router)
 
 app.listen(3000) 
