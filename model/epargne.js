@@ -5,7 +5,7 @@ const uniqueValidate = require('mongoose-unique-validator');
 
 const epargne = mongoose.Schema({
     userId: {type: String, required: true},
-    solde: {type:String, required: true},
+    solde: {type:Number, required: true},
     status: {type:String, required: true}
 })
 

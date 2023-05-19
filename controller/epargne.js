@@ -1,6 +1,7 @@
 const Solde = require('../model/solde');
 const User = require("../model/user");
 const Epargne = require('../model/epargne');
+const Histo = require('../model/histoEpargne')
 
 exports.epargneSous = (req,res, next)=>{
     User.findOne({_id: req.auth.userId})
@@ -34,40 +35,70 @@ exports.epargneSous = (req,res, next)=>{
                         else{
                             Epargne.findOne({userId: data._id})
                             .then((epar)=>{
-                                if(epar == null){
+                                console.log(epar)
+                                if(epar === null){
                                     const epargn = new Epargne({
                                         userId: data._id,
                                         solde: req.body.montant,
                                         status: req.body.periode
                                     })
                                     epargn.save()
-                                    .then((data)=>{
-                                        console.log(data)
-                                        const sold = {
-                                            solde: sold.solde - parseInt(req.body.montant)
+                                    .then((val)=>{
+                                        const solde = {
+                                            solde: parseInt(sold.solde)  - parseInt(req.body.montant)
                                         }
-                                        Solde.updateOne({userId: data._id},{...sold, userId: data._id})
-                                        .then(()=>res.status(201).json({msg: "Vous avez épargnez merci pour la confiance"}))
-                                        .catch((error)=> res.status.json({error: error.message}))
+                                        Solde.updateOne({userId: data._id},{...solde, userId: data._id})
+                                        .then(()=>
+                                        {   
+                                            const histo = new Histo({
+                                                userEp: val._id,
+                                                montant: req.body.montant,
+                                                date: Date.now(),
+                                                status: req.body.periode
+                                            })
+                                            histo.save()
+                                            .then(()=>res.status(201).json({msg: "Vous avez épargnez merci pour la confiance"}))
+                                            .catch((error)=> res.status(404).json({error: error.message}))
+                                        })
+                                        .catch((error)=> res.status(404).json({error: error.message}))
 
                                     })
-                                    .catch((error)=> res.status.json({error: error.message}))
+                                    .catch((error)=> res.status(404).json({error: error.message}))
                                 }
                                 else{
                                    
                                   Epargne.findOne({userId: data._id})
                                   .then((epg)=> {
                                         const epagnCount = {
-                                            solde : epg.solde + parseInt(req.body.montant)
+                                            solde : parseInt(epg.solde) + parseInt(req.body.montant)
                                         }
                                         Epargne.updateOne({userId:epg.userId }, {...epagnCount,userId:epg.userId })
-                                        .then(()=> res.status(201).json({msg: "Vous avez épargnez merci pour la confiance"}))
-                                        .catch((error)=> res.status.json({error: error.message}))
+                                        .then(()=>{
+                                            const donne = {
+                                                solde: parseInt(sold.solde)  - parseInt(req.body.montant)
+                                            }
+                                            Solde.updateOne({userId: data._id},{...donne, userId: data._id})
+                                            .then(()=>
+                                            {   
+                                                const histo = new Histo({
+                                                    userEp: epg._id,
+                                                    montant: req.body.montant,
+                                                    date: Date.now(),
+                                                    status: req.body.periode
+                                                })
+                                                histo.save()
+                                                .then(()=>res.status(201).json({msg: "Vous avez épargnez merci pour la confiance"}))
+                                                .catch((error)=> res.status(404).json({error: error.message}))
+                                            })
+                                            .catch((error)=> res.status(404).json({error: error.message}))
+                                        })
+                                        .catch((error)=> res.status(404).json({error: error.message}))
                                     })
-                                    .catch((error)=> res.status.json({error: error.message}))
+                                    .catch((error)=> res.status(404).json({error: error.message}))
 
                                 }
                             })
+                            .catch((error)=> res.status(404).json({error: error.message}))
 
 
                         }    

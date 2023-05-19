@@ -15,14 +15,12 @@ exports.DebiteClient = (req,res)=>{
             return 
         }
         else{
-           
             Solde.findOne({userId: data._id})
             .then((item)=> {
                 if(item.solde == 0 || item.solde < req.body.montant){
                     res.status(401).json({msg: "Compte insuffissant"})
                     return 
                 }
-
                 const debit = {
                     Solde: item.solde - parseInt(req.body.montant)
                  }
@@ -59,16 +57,15 @@ exports.CrediteClient = (req,res)=>{
             return 
         }
         else{
-           
             Solde.findOne({userId: data._id})
             .then((item)=> {
 
                 const credit = {
-                    Solde: item.solde + parseInt(req.body.montant)
+                    solde: item.solde + parseInt(req.body.montant)
                  }
                 Solde.updateOne({userId: data._id}, {...credit,userId: data._id })
                 .then(()=> {
-                    const crediEff = new Debite({
+                    const crediEff = new Credite({
                         userId: data._id,
                         moyenTrans: "Guichet",
                         codeValide: "xxxxxxxxxx",
@@ -84,9 +81,6 @@ exports.CrediteClient = (req,res)=>{
                 .catch((error)=> res.status(500).json({error: error.message}))
             })
         }
-
-
-
     })
     .catch((error)=> res.status(500).json({error: error.message}))
 }
