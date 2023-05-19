@@ -6,6 +6,6 @@ exports.preCompte = (req,res,next)=>{
     .then((data)=> {
         res.send("ok")
     })
-    .catch((error)=> res.status(404).json({error.message}));
+    .catch((error)=> res.status(404).json({ error: error.message}));
     
 }
