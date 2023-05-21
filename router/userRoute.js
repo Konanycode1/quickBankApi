@@ -26,5 +26,5 @@ router.get('/debiteOne/:id',auth,debit.debiteOne);
 router.post('/gestionDebite/', gestion.DebiteClient)
 router.post('/gestionCredite/', gestion.CrediteClient);
 router.post('/epargneSous/',auth, epargne.epargneSous);
-router.post('/pret/',pret.preCompte);
+router.post('/pret/',auth,pret.preCompte);
 module.exports = router;
