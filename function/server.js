@@ -51,7 +51,7 @@ router.post('/epargneSous/',auth, epargne.epargneSous);
 router.post('/pret/',auth,pret.preCompte);
 
 
-app.use('/.netlify/functions/api', router)
+app.use('/.netlify/functions/server', router)
 
 // app.listen(3000) 
 module.exports.handler = serverless(app)
