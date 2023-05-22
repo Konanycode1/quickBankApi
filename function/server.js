@@ -39,6 +39,7 @@ router.put("/updatePass/", controller.updateUser);
 router.post('/virement/',auth,vire.virement);
 router.get('/virementAll/',auth,vire.virementAll);
 router.get('/virementOne/:id',auth,vire.virementOne);
+router.get('/virementAlluser/:id',auth,vire.virementAlluser);
 router.post('/credite/',auth,credi.CrediteCompte);
 router.get('/crediteAll/',auth,credi.CrediteAll);
 router.get('/crediteOne/:id',auth,credi.CrediteOne);
@@ -48,7 +49,13 @@ router.get('/debiteOne/:id',auth,debit.debiteOne);
 router.post('/gestionDebite/', gestion.DebiteClient)
 router.post('/gestionCredite/', gestion.CrediteClient);
 router.post('/epargneSous/',auth, epargne.epargneSous);
+router.get('/epargneOne/:id',auth,epargne.epargneOne);
+router.get('/epargneAllUser/:id',auth,epargne.epargneAllUser);
+router.get('/epargneAll/',epargne.epargneAll);
 router.post('/pret/',auth,pret.preCompte);
+router.get('/pretOne/:id',auth,pret.pretOne);
+router.get('/pretAllUser/:id',auth,pret.pretAllUser);
+router.get('/pretAll/',pret.pretAll);
 
 
 app.use('/.netlify/functions/server', router)

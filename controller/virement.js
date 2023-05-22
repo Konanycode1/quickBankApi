@@ -66,8 +66,12 @@ exports.virementAll = (req,res,next)=>{
     .catch((error)=>res.status(404).json({error: error.message}))
 }
 exports.virementOne = (req,res,next)=>{
-    console.log(req.params.id)
-    Virement.find({userId:req.params.id})
+    Virement.find({id:req.params.id})
+    .then((data)=>res.status(200).json({data}))
+    .catch((error)=>res.status(404).json({error: error.message}))
+}
+exports.virementAlluser = (req,res,next)=>{
+    Virement.find({id:req.params.id})
     .then((data)=>res.status(200).json({data}))
     .catch((error)=>res.status(404).json({error: error.message}))
 }

@@ -109,3 +109,41 @@ exports.epargneSous = (req,res, next)=>{
     })
     .catch((error)=> res.status(401).json({error: error.message}))
 }
+
+exports.epargneOne = (req, res, next) =>{
+    User.findOne({_id: req.auth.userId})
+    .then((data)=> {
+        if(!data){
+            res.status(401).json({msg: "Cet compte est introuvable!!"})
+            return 
+        }
+        else{
+            Epargne.findOne({_id: req.params.id})
+            .then((data)=> res.status(200).json({data}))
+            .catch((error)=>res.status(404).json({error:error.message}))
+        }
+    })
+    .catch((error)=> res.status(404).json({error:error.message}))
+
+}
+
+exports.epargneAllUser = (req,res)=>{
+    User.findOne({_id: req.auth.userId})
+    .then((data)=> {
+        if(!data){
+            res.status(401).json({msg: "Cet compte est introuvable!!"})
+            return 
+        }
+        else{
+            Epargne.find({userId: req.params.id})
+            .then((data)=> res.status(200).json({data}))
+            .catch((error)=>res.status(404).json({error:error.message}))
+        }
+    })
+    .catch((error)=> res.status(404).json({error:error.message})) 
+}
+exports.epargneAll = (req,res,next) => {
+    Epargne.find()
+    .then((data)=> res.status(200).json({data}))
+    .catch((error)=> res.status(404).json({error: error.message}))
+}

@@ -51,3 +51,40 @@ exports.preCompte = (req,res,next)=>{
     .catch((error)=> res.status(404).json({ error: error.message}));
     
 }
+exports.pretOne = (req, res, next) =>{
+    User.findOne({_id: req.auth.userId})
+    .then((data)=> {
+        if(!data){
+            res.status(401).json({msg: "Cet compte est introuvable!!"})
+            return 
+        }
+        else{
+            Pret.findOne({_id: req.params.id})
+            .then((data)=> res.status(200).json({data}))
+            .catch((error)=>res.status(404).json({error:error.message}))
+        }
+    })
+    .catch((error)=> res.status(404).json({error:error.message}))
+
+}
+
+exports.pretAllUser = (req,res)=>{
+    User.findOne({_id: req.auth.userId})
+    .then((data)=> {
+        if(!data){
+            res.status(401).json({msg: "Cet compte est introuvable!!"})
+            return 
+        }
+        else{
+            Pret.find({userId: req.params.id})
+            .then((data)=> res.status(200).json({data}))
+            .catch((error)=>res.status(404).json({error:error.message}))
+        }
+    })
+    .catch((error)=> res.status(404).json({error:error.message})) 
+}
+exports.pretAll = (req,res,next) => {
+    Pret.find()
+    .then((data)=> res.status(200).json({data}))
+    .catch((error)=> res.status(404).json({error: error.message}))
+}
