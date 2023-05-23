@@ -43,7 +43,11 @@ exports.debiteAll = (req,res,next)=>{
     .catch((error)=>res.status(404).json({error: error.message}))
 }
 exports.debiteOne = (req,res,next)=>{
-    console.log(req.params.id)
+    Debite.find({_id:req.params.id})
+    .then((data)=>res.status(200).json({data}))
+    .catch((error)=>res.status(404).json({error: error.message}))
+}
+exports.debiteAlluser = (req,res,next)=>{
     Debite.find({userId:req.params.id})
     .then((data)=>res.status(200).json({data}))
     .catch((error)=>res.status(404).json({error: error.message}))

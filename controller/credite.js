@@ -42,8 +42,13 @@ exports.CrediteAll = (req,res,next)=>{
     .then((data)=>res.status(200).json({data}))
     .catch((error)=>res.status(404).json({error: error.message}))
 }
-exports.CrediteOne = (req,res,next)=>{
+exports.CrediteAlluser = (req,res,next)=>{
     Credite.find({userId:req.params.id})
+    .then((data)=>res.status(200).json({data}))
+    .catch((error)=>res.status(404).json({error: error.message}))
+}
+exports.CrediteOne = (req,res,next)=>{
+    Credite.find({_id:req.params.id})
     .then((data)=>res.status(200).json({data}))
     .catch((error)=>res.status(404).json({error: error.message}))
 }
