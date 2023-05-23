@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 
 
 router.get('/', controller.recupUserAll);
+router.post('/userOne/:id',controller.recupUserOne);
 router.post('/signup/',controller.UserAccount);
 router.post('/login/', controller.Userlog);
 router.put("/updatePass/", controller.updateUser);
