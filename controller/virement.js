@@ -27,32 +27,40 @@ exports.virement = (req,res,next)=>{
                     res.status(404).json({msg: "ce compte n'existe pas !!!"})
                     return
                 }
-                Solde.findOne({userId: user._id},)
-                .then((credit)=>{
-                    if(!credit){
-                        res.status(401).json({msg: `Erreur de visualisation de Solde`})
-                    }
-                    const soldeobjet = {
-                        ...req.body,
-                        solde: credit.solde + parseInt(req.body.montant)
-                    };
-                    Solde.updateOne({userId: user._id}, {...soldeobjet,userId: user._id})
-                    .then(()=>{
-                        const soldeEnv = {
-                            solde: data.solde - parseInt(req.body.montant)
+                else if(user.numeroClient != req.body.numeroCompte){
+                    res.status(404).json({msg: "ce compte n'existe pas !!!"})
+                    return
+                }
+                else{
+                    Solde.findOne({userId: user._id},)
+                    .then((credit)=>{
+                        if(!credit){
+                            res.status(401).json({msg: `Erreur de visualisation de Solde`})
                         }
-                        Solde.updateOne({userId:data.userId},{...soldeEnv, userId: data.userId})
+                        const soldeobjet = {
+                            ...req.body,
+                            solde: credit.solde + parseInt(req.body.montant)
+                        };
+                        Solde.updateOne({userId: user._id}, {...soldeobjet,userId: user._id})
                         .then(()=>{
-                            const vire = new Virement({...req.body,userId: user._id,date: Date()})
-                            vire.save()
-                            .then(()=>res.status(201).json({msg: `Virement effactué avec success !!!`}) )
+                            const soldeEnv = {
+                                solde: data.solde - parseInt(req.body.montant)
+                            }
+                            Solde.updateOne({userId:data.userId},{...soldeEnv, userId: data.userId})
+                            .then(()=>{
+                                const vire = new Virement({...req.body,userId: user._id,date: Date()})
+                                vire.save()
+                                .then(()=>res.status(201).json({msg: `Virement effactué avec success !!!`}) )
+                                .catch((error)=> res.status(401).json({error: error.message}))
+                            })
                             .catch((error)=> res.status(401).json({error: error.message}))
                         })
                         .catch((error)=> res.status(401).json({error: error.message}))
                     })
-                    .catch((error)=> res.status(401).json({error: error.message}))
-                })
-                .catch((error)=> res.status(404).json({error: error.message}))
+                    .catch((error)=> res.status(404).json({error: error.message}))
+                }
+            
+            
             })
             .catch((error)=> res.status(404).json({error: error.message}))
         }

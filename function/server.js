@@ -36,6 +36,7 @@ router.get('/', controller.recupUserAll);
 router.get('/userOne/:id',auth,controller.recupUserOne);
 router.post('/signup/',controller.UserAccount);
 router.post('/login/', controller.Userlog);
+router.get('/solde/:id',auth,controller.solde);
 router.put("/updatePass/", controller.updateUser);
 router.post('/virement/',auth,vire.virement);
 router.get('/virementAll/',vire.virementAll);
@@ -60,16 +61,16 @@ router.get('/pretOne/:id',auth,pret.pretOne);
 router.get('/pretAllUser/:id',auth,pret.pretAllUser);
 router.get('/pretAll/',pret.pretAll);
 
+app.use('/.netlify/functions/server', router)
+module.exports.handler = serverless(app)
 
-
-if(process.env.NODE_ENV == "production"){
-  app.use('/.netlify/functions/server', router)
-  module.exports.handler = serverless(app)
-}
-else{
-  app.use('/api/',router)
-  app.listen(3000, ()=> console.log("server lancé"))
-}
+// if(process.env.NODE_ENV == "production"){
+ 
+// }
+// else{
+//   app.use('/api/',router)
+//   app.listen(3000, ()=> console.log("server lancé"))
+// }
 
 
 

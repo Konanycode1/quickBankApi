@@ -144,3 +144,8 @@ exports.recupUserOne = (req,res, next)=>{
     .then((data)=> res.status(200).json({data}))
     .catch((error)=> res.status(404).json({error: error.message}))
 }
+exports.solde = (req,res,next)=>{
+    Solde.findOne({userId: req.params.id})
+    .then((data)=> res.status(201).json({data}))
+    .catch((error)=> res.status(404).json({errror: error.message}))
+}
