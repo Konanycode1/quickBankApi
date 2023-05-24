@@ -94,7 +94,7 @@ exports.Userlog = (req, res, next)=>{
                 userId : user._id,
                 token: jwt.sign({userId: user.id},
                     "RANDOM_TOKEN_KEY",
-                    {expiresIn: '24h'}
+                    {expiresIn: 3600 *24}
                     )
             });
         })

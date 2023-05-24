@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 
 
 router.get('/', controller.recupUserAll);
-router.get('/userOne/:id',controller.recupUserOne);
+router.get('/userOne/:id',auth,controller.recupUserOne);
 router.post('/signup/',controller.UserAccount);
 router.post('/login/', controller.Userlog);
 router.put("/updatePass/", controller.updateUser);
@@ -61,7 +61,15 @@ router.get('/pretAllUser/:id',auth,pret.pretAllUser);
 router.get('/pretAll/',pret.pretAll);
 
 
-app.use('/.netlify/functions/server', router)
 
-// app.listen(3000) 
-module.exports.handler = serverless(app)
+if(process.env.NODE_ENV == "production"){
+  app.use('/.netlify/functions/server', router)
+  module.exports.handler = serverless(app)
+}
+else{
+  app.use('/api/',router)
+  app.listen(3000, ()=> console.log("server lancé"))
+}
+
+
+

@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req,res,next) => {
     try {
-        const token =  req.headers.authorization.split(' ')[1]
-        console.log(token)
+        const token =  req.headers.authorization.split(' ')[1];
         const decodeToken = jwt.verify(token, 'RANDOM_TOKEN_KEY');
         const userId = decodeToken.userId
         req.auth = {
@@ -12,7 +11,7 @@ module.exports = (req,res,next) => {
         next();
         
     } catch (error) {
-        res.status(401).json({error: error.message});
+        return res.redirect('/page/login.html');
         
     }
 }
