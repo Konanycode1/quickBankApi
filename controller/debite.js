@@ -16,6 +16,10 @@ exports.DebiteCompte = (req,res, next)=>{
         else{
             Solde.findOne({userId: data._id})
             .then((sol)=> {
+                if(sol.montant == req.body.montant || sol.montant < req.body.montant){
+                    res.status(401).json({msg:"Compte insuffissant !!"});
+                    return 
+                }
                 const solInit = {
                     solde: sol.solde - parseInt(req.body.montant)
                 }
