@@ -16,24 +16,33 @@ exports.DebiteCompte = (req,res, next)=>{
         else{
             Solde.findOne({userId: data._id})
             .then((sol)=> {
-                if(sol.montant == req.body.montant || sol.montant < req.body.montant){
+                if(!sol){
+                    res.status(401).json({msg:"Solde introuvable !!"})
+                    return
+                }
+                else if(sol.montant == req.body.montant || sol.montant <= req.body.montant){
                     res.status(401).json({msg:"Compte insuffissant !!"});
                     return 
                 }
-                const solInit = {
-                    solde: sol.solde - parseInt(req.body.montant)
-                }
-                Solde.updateOne({userId: data._id},{...solInit,userId:data._id})
-                .then(()=>{
-                    const debitSol = new Debite({
-                        userId: data._id,
-                        ...req.body,
-                        date: Date()
+                else{
+                    const solInit = {
+                        solde: sol.solde - parseInt(req.body.montant)
+                    }
+                    Solde.updateOne({userId: data._id},{...solInit,userId:data._id})
+                    .then(()=>{
+                        const debitSol = new Debite({
+                            userId: data._id,
+                            ...req.body,
+                            date: Date()
+                        })
+                        debitSol.save()
+                        .then(()=> res.status(200).json({msg: 'Compte debité !!!'}))
+    
                     })
-                    debitSol.save()
-                    .then(()=> res.status(200).json({msg: 'Compte debité !!!'}))
 
-                })
+                }
+               
+               
             })
         }
         
