@@ -20,15 +20,15 @@ exports.DebiteCompte = (req,res, next)=>{
                     res.status(401).json({msg:"Solde introuvable !!"})
                     return
                 }
-                else if( sol.montant <= 0){
+                else if( sol.solde <= 0){
                     res.status(401).json({msg:"Compte insuffissant !!"});
                     return 
                 }
-                else if(sol.montant == req.body.montant){
-                    res.status(401).json({msg:"Compte insuffissant !!"});
+                else if(sol.solde == req.body.montant){
+                    res.status(401).json({msg:"Compte trop juste !!"});
                     return 
                 }
-                else if(sol.montant <= req.body.montant){
+                else if(sol.solde < req.body.montant){
                     res.status(401).json({msg:"Compte insuffissant !!"});
                     return 
                 }
