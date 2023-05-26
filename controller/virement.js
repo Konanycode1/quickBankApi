@@ -48,9 +48,9 @@ exports.virement = (req,res,next)=>{
                             }
                             Solde.updateOne({userId:data.userId},{...soldeEnv, userId: data.userId})
                             .then(()=>{
-                                const vire = new Virement({...req.body,userId: user._id,date: Date()})
+                                const vire = new Virement({...req.body,userId:data.userId,userClient:user._id,date: Date()})
                                 vire.save()
-                                .then(()=>res.status(201).json({msg: `Virement effactué avec success !!!`}) )
+                                .then(()=>res.status(201).json({msg: `Virement effectué avec success !!!`}) )
                                 .catch((error)=> res.status(401).json({error: error.message}))
                             })
                             .catch((error)=> res.status(401).json({error: error.message}))
@@ -59,8 +59,6 @@ exports.virement = (req,res,next)=>{
                     })
                     .catch((error)=> res.status(404).json({error: error.message}))
                 }
-            
-            
             })
             .catch((error)=> res.status(404).json({error: error.message}))
         }
@@ -79,6 +77,7 @@ exports.virementOne = (req,res,next)=>{
     .catch((error)=>res.status(404).json({error: error.message}))
 }
 exports.virementAlluser = (req,res,next)=>{
+    console.log(req.params.id)
     Virement.find({userId:req.params.id})
     .then((data)=>res.status(200).json({data}))
     .catch((error)=>res.status(404).json({error: error.message}))

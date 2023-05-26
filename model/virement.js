@@ -7,6 +7,7 @@ const virement = mongoose.Schema({
     montant: {type:String, required:true},
     codeSecret: {type:String, required: true},
     userId: {type:String, required: true},
+    userClient:{type:String, required: true},
     date: {type:String, required: true},
 })
 virement.plugin(uniqueValidate);

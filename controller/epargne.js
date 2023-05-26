@@ -52,6 +52,7 @@ exports.epargneSous = (req,res, next)=>{
                                         {   
                                             const histo = new Histo({
                                                 userEp: val._id,
+                                                userId:data._id, 
                                                 montant: req.body.montant,
                                                 date: Date.now(),
                                                 status: req.body.periode
@@ -82,6 +83,7 @@ exports.epargneSous = (req,res, next)=>{
                                             {   
                                                 const histo = new Histo({
                                                     userEp: epg._id,
+                                                    userId:data._id, 
                                                     montant: req.body.montant,
                                                     date: Date.now(),
                                                     status: req.body.periode
@@ -140,6 +142,11 @@ exports.epargneAllUser = (req,res)=>{
             .catch((error)=>res.status(404).json({error:error.message}))
         }
     })
+    .catch((error)=> res.status(404).json({error:error.message})) 
+}
+exports.epargneAllUserHisto = (req,res)=>{
+    Histo.find({userId: req.params.id})
+    .then((data)=> res.status(200).json({data}))
     .catch((error)=> res.status(404).json({error:error.message})) 
 }
 exports.epargneAll = (req,res,next) => {

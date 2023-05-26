@@ -3,6 +3,36 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Solde = require('../model/solde');
 const solde = require('../model/solde');
+let nodeMailer = require('nodemailer');
+
+// function sendEmail(email,code) {
+//     let transporter = nodeMailer.createTransport({
+//         host: "sandbox.smtp.mailtrap.io",
+//         port: 2525,
+//         secure: false,
+//         auth: {
+//           user: "8a29b0661901a6",
+//           pass: "b50dd3fe3834d1"
+//         },
+//         tls: {
+//             rejectUnauthorized: false,
+//           }
+//       });
+//       message = {
+//         from: "abrahamkonany@gmail.com",
+//         to: email,
+//         subject: "Subject",
+//         text: `Bonjour !! voici votre code secret ${code}`
+//         }
+//         transporter.sendMail(message, (err, info) =>{
+//             if (err) {
+//                 console.log(err)
+//               } else {
+//                 console.log(info);
+//               }
+//         })
+    
+// }
 
 exports.UserAccount = (req,res, next)=>{
     let tab = [0,1,2,3,4,5,6,7,8,9];
@@ -54,8 +84,7 @@ exports.UserAccount = (req,res, next)=>{
             })
             user.save()
             .then((data)=>{
-                console.log(data)
-                
+                // sendEmail(data.email,data.codeSecret);
                 const solde = new Solde({
                     userId : data._id,
                     numeroCompte: data.numeroClient,
@@ -63,7 +92,10 @@ exports.UserAccount = (req,res, next)=>{
 
                 })
                 solde.save()
-                .then(()=>res.status(201).json({ msg: "create account validate !!"}))
+                .then(()=> {
+                   
+                    res.status(201).json({ msg: "create account validate !!"})
+                })
                 .catch((error)=> res.status(400).json({ error: error.message}));
             } )
             .catch((error)=>{

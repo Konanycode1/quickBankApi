@@ -48,13 +48,14 @@ router.get('/crediteOne/:id',auth,credi.CrediteOne);
 router.get('/crediteAlluser/:id',auth,credi.CrediteAlluser);
 router.post('/debite/',auth,debit.DebiteCompte);
 router.get('/debiteAll/',debit.debiteAll);
-router.get('/debiteAll/',auth,debit.debiteAlluser);
+router.get('/debiteAlluser/:id',auth,debit.debiteAlluser);
 router.get('/debiteOne/:id',auth,debit.debiteOne);
 router.post('/gestionDebite/', gestion.DebiteClient)
 router.post('/gestionCredite/', gestion.CrediteClient);
 router.post('/epargneSous/',auth, epargne.epargneSous);
 router.get('/epargneOne/:id',auth,epargne.epargneOne);
 router.get('/epargneAllUser/:id',auth,epargne.epargneAllUser);
+router.get('/histoEpargne/:id',auth,epargne.epargneAllUserHisto);
 router.get('/epargneAll/',epargne.epargneAll);
 router.post('/pret/',auth,pret.preCompte);
 router.get('/pretOne/:id',auth,pret.pretOne);
@@ -71,6 +72,8 @@ module.exports.handler = serverless(app)
 //   app.use('/api/',router)
 //   app.listen(3000, ()=> console.log("server lancé"))
 // }
+  // app.use('/api/',router)
+  // app.listen(3000, ()=> console.log("server lancé"))
 
 
 
